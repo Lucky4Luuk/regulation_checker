@@ -1,6 +1,11 @@
 mod specs;
+mod regulations;
 
 fn main() {
+    println!("Regulations:");
+    let regulations = regulations::Regulations::load().expect("Failed to load regulations!");
+    println!("{:?}", regulations);
+
     println!("Scanning ./cars...");
     let mut dirs = Vec::new();
     for entry in std::fs::read_dir("cars").expect("Cannot read ./cars! Does the folder exist?") {
@@ -23,7 +28,7 @@ fn main() {
         std::fs::write(p2, utf8).expect("Failed to write csv!");
     }
 
-    println!("Cars found:\n{}", dirs.join("\n"));
+    println!("Cars found: {}", dirs.len());
     let mut cars = Vec::new();
     for dir in &dirs {
         match specs::Car::from_directory(dir) {
@@ -32,9 +37,19 @@ fn main() {
         }
     }
 
+    let mut max_width = 0;
+    let mut results = Vec::new();
     for car in &cars {
-        println!("car: {}", car.car_name);
-        println!("model year: {}", car.model_year);
-        // println!("front brake type: {}", car.front_brake_type);
+        max_width = max_width.max(car.car_name.len());
+        results.push(regulations.check_car(&car));
     }
+    let mut result_text = String::from("========================================\n Results\n========================================\n");
+    for (i, car) in cars.iter().enumerate() {
+        let result = &results[i];
+        result_text.push_str(&format!("{: <width$}", format!("{}... ", car.car_name), width = max_width + 4));
+        result_text.push_str(&format!("{:?}", result));
+        result_text.push('\n');
+    }
+    println!("{}", result_text);
+    std::fs::write("result.txt", result_text).expect("Failed to write output!");
 }

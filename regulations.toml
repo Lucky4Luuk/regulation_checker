@@ -1,0 +1,10 @@
+[stats]
+drivability = 35.0
+sportiness = 35.0
+reliability = 65.0
+safety = 36.0
+practicality = 40.0
+comfort = 20.0
+
+[rules]
+or = [["drivability", "sportiness"], ["practicality", "comfort"]]

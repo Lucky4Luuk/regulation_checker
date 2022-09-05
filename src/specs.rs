@@ -12,11 +12,16 @@ fn parse_int(s: &str) -> Result<usize> {
 
 #[derive(Debug)]
 pub struct Car {
+// Basic information
     pub car_name: String,
     pub model_name: String,
     pub model_year: usize,
     pub wheelbase: usize,
 
+// Stats
+    pub safety_rating: f32,
+
+// Part information
     pub chassis_type: String,
     pub chassis_material: String,
     pub panel_material: String,
@@ -40,6 +45,8 @@ impl Car {
             model_name: raw.model_name,
             model_year: parse_int(&raw.model_year)?,
             wheelbase: parse_int(&raw.wheelbase)?,
+
+            safety_rating: parse_float(&raw.safety_rating)?,
 
             chassis_type: raw.chassis_type,
             chassis_material: raw.chassis_material,
