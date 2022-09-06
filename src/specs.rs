@@ -19,7 +19,12 @@ pub struct Car {
     pub wheelbase: usize,
 
 // Stats
+    pub drivability_rating: f32,
+    pub sportiness_rating: f32,
+    pub reliability_rating: f32,
     pub safety_rating: f32,
+    pub practicality_rating: f32,
+    pub comfort_rating: f32,
 
 // Part information
     pub chassis_type: String,
@@ -46,7 +51,12 @@ impl Car {
             model_year: parse_int(&raw.model_year)?,
             wheelbase: parse_int(&raw.wheelbase)?,
 
+            drivability_rating: parse_float(&raw.drivability_rating)?,
+            sportiness_rating: parse_float(&raw.sportiness_rating)?,
+            reliability_rating: parse_float(&raw.trim_reliability)?,
             safety_rating: parse_float(&raw.safety_rating)?,
+            practicality_rating: parse_float(&raw.practicality_rating)?,
+            comfort_rating: parse_float(&raw.comfort_rating)?,
 
             chassis_type: raw.chassis_type,
             chassis_material: raw.chassis_material,

@@ -1,63 +1,47 @@
 use std::collections::HashMap;
 use anyhow::Result;
-
 use serde::Deserialize;
 
 use crate::specs::Car;
-
-#[derive(Debug, Clone)]
-pub enum CheckError {
-    ErrStats(Vec<String>),
-}
-
-impl std::fmt::Display for CheckError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::result::Result<(), std::fmt::Error> {
-        write!(f, "{}", format!("{:?}", self))
-    }
-}
-
-impl std::error::Error for CheckError {}
-
-#[derive(Debug, Deserialize)]
-pub struct Regulations {
-    pub stats: Option<Stats>,
-    pub rules: Option<Rules>,
-}
+use super::{Rules, CheckError};
 
 #[derive(Debug, Deserialize)]
 pub struct Stats {
+    pub drivability: Option<f32>,
+    pub sportiness: Option<f32>,
+    pub reliability: Option<f32>,
     pub safety: Option<f32>,
-    pub safety_max: Option<f32>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct Rules {
-    pub or: Option<Vec<Vec<String>>>
-}
-
-impl Regulations {
-    pub fn load() -> Result<Self> {
-        Ok(toml::from_str(&std::fs::read_to_string("regulations.toml")?)?)
-    }
-
-    pub fn check_car(&self, car: &Car) -> Result<()> {
-        if let Some(stats) = &self.stats {
-            stats.check_car(car, &self.rules)?;
-        }
-        Ok(())
-    }
+    pub practicality: Option<f32>,
+    pub comfort: Option<f32>,
 }
 
 impl Stats {
     pub fn check_car(&self, car: &Car, rules: &Option<Rules>) -> Result<()> {
         let mut result_map: HashMap<String, bool> = HashMap::new();
+        result_map.insert(String::from("drivability"), true);
+        result_map.insert(String::from("sportiness"), true);
+        result_map.insert(String::from("reliability"), true);
         result_map.insert(String::from("safety"), true);
-        result_map.insert(String::from("safety_max"), true);
+        result_map.insert(String::from("practicality"), true);
+        result_map.insert(String::from("comfort"), true);
+
+        if let Some(drivability) = self.drivability {
+            if car.drivability_rating < drivability { result_map.insert(String::from("drivability"), false); }
+        }
+        if let Some(sportiness) = self.sportiness {
+            if car.sportiness_rating < sportiness { result_map.insert(String::from("sportiness"), false); }
+        }
+        if let Some(reliability) = self.reliability {
+            if car.reliability_rating < reliability { result_map.insert(String::from("reliability"), false); }
+        }
         if let Some(safety) = self.safety {
             if car.safety_rating < safety { result_map.insert(String::from("safety"), false); }
         }
-        if let Some(safety_max) = self.safety_max {
-            if car.safety_rating > safety_max { result_map.insert(String::from("safety_max"), false); }
+        if let Some(practicality) = self.practicality {
+            if car.practicality_rating < practicality { result_map.insert(String::from("practicality"), false); }
+        }
+        if let Some(comfort) = self.comfort {
+            if car.comfort_rating < comfort { result_map.insert(String::from("comfort"), false); }
         }
 
         let result_map = match rules {
@@ -71,11 +55,9 @@ impl Stats {
                     } else {
                         for rule in or {
                             let rule_name = rule.join("|");
-                            let mut failed = true;
+                            let mut failed = false;
                             for key in rule {
-                                if let Some(value) = result_map.get(key) {
-                                    if *value { failed = false; }
-                                }
+                                failed = failed || result_map.get(key).map(|v| *v).unwrap_or(false);
                                 result_map.remove(key);
                             }
                             result_map.insert(rule_name, failed);

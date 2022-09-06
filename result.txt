@@ -2,5 +2,5 @@
  Results
 ========================================
 Dysoon Vack S...           Ok(())
-Dysoon Zuck...             Err(ErrStats(["safety"]))
+Dysoon Zuck...             Err(ErrStats(["practicality|comfort", "reliability", "safety"]))
 RaccWorkz Flora 2.9 GTZ... Ok(())
