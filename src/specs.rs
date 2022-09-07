@@ -27,6 +27,7 @@ pub struct Car {
     pub comfort_rating: f32,
 
 // Engine
+    pub engine_year: usize,
     pub cylinder_count: usize,
     pub aspiration: String,
 
@@ -62,6 +63,7 @@ impl Car {
             practicality_rating: parse_float(&raw.practicality_rating)?,
             comfort_rating: parse_float(&raw.comfort_rating)?,
 
+            engine_year: parse_int(&raw.variant_year)?,
             cylinder_count: parse_int(&raw.cylinder_count)?,
             aspiration: raw.aspiration,
 

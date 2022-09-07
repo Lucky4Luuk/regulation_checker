@@ -10,4 +10,6 @@ comfort = 20.0
 or = [["drivability", "sportiness"], ["practicality", "comfort"]]
 
 [engine]
+max_year = 2003
+#max_cylinders = 4 # This works too but I'm showcasing the ASS regulations lol
 turbo_max_cylinders = 4
