@@ -8,3 +8,6 @@ comfort = 20.0
 
 [rules]
 or = [["drivability", "sportiness"], ["practicality", "comfort"]]
+
+[engine]
+turbo_max_cylinders = 4

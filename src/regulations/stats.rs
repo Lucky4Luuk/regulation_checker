@@ -3,7 +3,12 @@ use anyhow::Result;
 use serde::Deserialize;
 
 use crate::specs::Car;
-use super::{Rules, CheckError};
+use super::CheckError;
+
+#[derive(Debug, Deserialize)]
+pub struct Rules {
+    pub or: Option<Vec<Vec<String>>>
+}
 
 #[derive(Debug, Deserialize)]
 pub struct Stats {

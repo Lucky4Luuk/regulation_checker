@@ -5,12 +5,15 @@ use serde::Deserialize;
 use crate::specs::Car;
 
 mod stats;
+mod engine;
 
 use stats::*;
+use engine::*;
 
 #[derive(Debug, Clone)]
 pub enum CheckError {
     ErrStats(Vec<String>),
+    ErrEngine(String),
 }
 
 impl std::fmt::Display for CheckError {
@@ -25,11 +28,7 @@ impl std::error::Error for CheckError {}
 pub struct Regulations {
     pub stats: Option<Stats>,
     pub rules: Option<Rules>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct Rules {
-    pub or: Option<Vec<Vec<String>>>
+    pub engine: Option<Engine>,
 }
 
 impl Regulations {
@@ -40,6 +39,9 @@ impl Regulations {
     pub fn check_car(&self, car: &Car) -> Result<()> {
         if let Some(stats) = &self.stats {
             stats.check_car(car, &self.rules)?;
+        }
+        if let Some(engine) = &self.engine {
+            engine.check_car(car)?;
         }
         Ok(())
     }

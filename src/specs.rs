@@ -26,6 +26,10 @@ pub struct Car {
     pub practicality_rating: f32,
     pub comfort_rating: f32,
 
+// Engine
+    pub cylinder_count: usize,
+    pub aspiration: String,
+
 // Part information
     pub chassis_type: String,
     pub chassis_material: String,
@@ -58,6 +62,9 @@ impl Car {
             practicality_rating: parse_float(&raw.practicality_rating)?,
             comfort_rating: parse_float(&raw.comfort_rating)?,
 
+            cylinder_count: parse_int(&raw.cylinder_count)?,
+            aspiration: raw.aspiration,
+
             chassis_type: raw.chassis_type,
             chassis_material: raw.chassis_material,
             panel_material: raw.panel_material,
@@ -72,6 +79,10 @@ impl Car {
             model_chassis_quality: parse_float(&raw.model_chassis_quality)?,
             model_body_techpool: parse_float(&raw.model_body_techpool)?,
         })
+    }
+
+    pub fn has_turbo(&self) -> bool {
+        &self.aspiration.trim() != &"Naturally Aspirated"
     }
 }
 
