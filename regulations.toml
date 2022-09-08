@@ -22,3 +22,7 @@ must_match = true
 front_max_width = 205
 front_max_profile = 50
 front_max_rim = 16
+banned_compounds = ["Semi-Slick"]
+
+[other]
+banned_parts = []

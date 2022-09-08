@@ -1,6 +1,7 @@
+use std::collections::HashMap;
 use anyhow::Result;
 
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 
 fn parse_float(s: &str) -> Result<f32> {
     Ok(s.trim().parse::<f32>()?)
@@ -12,6 +13,9 @@ fn parse_int(s: &str) -> Result<usize> {
 
 #[derive(Debug)]
 pub struct Car {
+// Raw
+    pub raw: HashMap<String, String>,
+
 // Basic information
     pub car_name: String,
     pub model_name: String,
@@ -41,6 +45,7 @@ pub struct Car {
     pub wheels_rear_width: usize,
     pub wheels_rear_profile: usize,
     pub wheels_rear_rim: usize,
+    pub wheels_compound: String,
 
 // Part information
     pub chassis_type: String,
@@ -62,11 +67,15 @@ impl Car {
     pub fn from_directory(path: &str) -> Result<Self> {
         let raw = RawCar::from_directory(path)?;
         Ok(Self {
+            raw: RawCar::to_hashmap(raw.clone()),
+
+        // Basic information
             car_name: raw.car_name,
             model_name: raw.model_name,
             model_year: parse_int(&raw.model_year)?,
             wheelbase: parse_int(&raw.wheelbase)?,
 
+        // Stats
             drivability_rating: parse_float(&raw.drivability_rating)?,
             sportiness_rating: parse_float(&raw.sportiness_rating)?,
             reliability_rating: parse_float(&raw.trim_reliability)?,
@@ -76,18 +85,22 @@ impl Car {
             cost: parse_float(&raw.trim_cost)?,
             fuel_economy: parse_float(&raw.trim_economy)?,
 
+        // Engine
             engine_year: parse_int(&raw.variant_year)?,
             cylinder_count: parse_int(&raw.cylinder_count)?,
             aspiration: raw.aspiration,
             octane: parse_float(&raw.fuel_octane)?,
 
+        // Wheels
             wheels_front_width: parse_int(&raw.front_tyre_width)?,
             wheels_front_profile: parse_int(&raw.front_tyre_profile)?,
             wheels_front_rim: parse_int(&raw.front_rim_size)?,
             wheels_rear_width: parse_int(&raw.rear_tyre_width)?,
             wheels_rear_profile: parse_int(&raw.rear_tyre_profile)?,
             wheels_rear_rim: parse_int(&raw.rear_rim_size)?,
+            wheels_compound: raw.tyre_compound,
 
+        // Part information
             chassis_type: raw.chassis_type,
             chassis_material: raw.chassis_material,
             panel_material: raw.panel_material,
@@ -127,7 +140,7 @@ impl std::fmt::Display for ImportError {
 impl std::error::Error for ImportError {}
 
 #[allow(dead_code)]
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct RawCar {
     #[serde(rename(deserialize = "Exporter Version"))]
     pub exporter_version: String,
@@ -655,5 +668,9 @@ impl RawCar {
         let p = format!("{}/{}_utf8.csv", path, name);
         let mut rdr = csv::ReaderBuilder::default().has_headers(false).from_path(p)?;
         Ok(rdr.deserialize().nth(1).ok_or(ImportError::Unknown)??)
+    }
+
+    pub fn to_hashmap(self: Self) -> HashMap<String, String> {
+        serde_yaml::from_value(serde_yaml::to_value(&self).expect("Failed to serialize to value!")).expect("Failed to deserialize from value!")
     }
 }

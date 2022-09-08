@@ -7,16 +7,20 @@ use crate::specs::Car;
 mod stats;
 mod engine;
 mod wheels;
+mod others;
 
 use stats::*;
 use engine::*;
 use wheels::*;
+use others::*;
 
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub enum CheckError {
+    Regulations(Vec<anyhow::Error>),
     ErrStats(Vec<String>),
     ErrEngine(String),
-    ErrWheels(String),
+    ErrWheels(Vec<String>),
+    ErrOthers(Vec<String>),
 }
 
 impl std::fmt::Display for CheckError {
@@ -33,6 +37,7 @@ pub struct Regulations {
     pub rules: Option<Rules>,
     pub engine: Option<Engine>,
     pub wheels: Option<Wheels>,
+    pub other: Option<Others>,
 }
 
 impl Regulations {
@@ -41,14 +46,29 @@ impl Regulations {
     }
 
     pub fn check_car(&self, car: &Car) -> Result<()> {
+        let mut errs = Vec::new();
         if let Some(stats) = &self.stats {
-            stats.check_car(car, &self.rules)?;
+            if let Err(e) = stats.check_car(car, &self.rules) {
+                errs.push(e);
+            }
         }
         if let Some(engine) = &self.engine {
-            engine.check_car(car)?;
+            if let Err(e) = engine.check_car(car) {
+                errs.push(e);
+            }
         }
         if let Some(wheels) = &self.wheels {
-            wheels.check_car(car)?;
+            if let Err(e) = wheels.check_car(car) {
+                errs.push(e);
+            }
+        }
+        if let Some(others) = &self.other {
+            if let Err(e) = others.check_car(car) {
+                errs.push(e);
+            }
+        }
+        if errs.len() > 0 {
+            return Err(CheckError::Regulations(errs).into());
         }
         Ok(())
     }
