@@ -6,16 +6,16 @@ safety = 36.0
 practicality = 40.0
 comfort = 20.0
 cost = 35000
-fuel_economy = 7.8	# Liters / 100 km
+fuel_economy = 7.8			# Liters / 100 km
 
 [rules]
 or = [["drivability", "sportiness"], ["practicality", "comfort"]]
 
 [engine]
 max_year = 2003
-#max_cylinders = 4	# This works too but I'm showcasing the ASS regulations lol
+#max_cylinders = 4			# This works too but I'm showcasing the ASS regulations lol
 turbo_max_cylinders = 4
-octane = 91	# In RON
+octane = 91					# In RON
 
 [wheels]
 must_match = true
