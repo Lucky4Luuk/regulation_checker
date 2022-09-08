@@ -10,6 +10,7 @@ pub struct Engine {
     pub max_year: Option<usize>,
     pub max_cylinders: Option<usize>,
     pub turbo_max_cylinders: Option<usize>,
+    pub octane: Option<f32>,
 }
 
 impl Engine {
@@ -32,6 +33,11 @@ impl Engine {
         if let Some(turbo_max_cylinders) = self.turbo_max_cylinders {
             if car.has_turbo() && car.cylinder_count > turbo_max_cylinders {
                 return Err(CheckError::ErrEngine(String::from("turbo_max_cylinders")).into());
+            }
+        }
+        if let Some(octane) = self.octane {
+            if car.octane > octane {
+                return Err(CheckError::ErrEngine(format!("fuel octane {}", car.octane)).into());
             }
         }
 

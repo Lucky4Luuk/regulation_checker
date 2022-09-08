@@ -18,6 +18,8 @@ pub struct Stats {
     pub safety: Option<f32>,
     pub practicality: Option<f32>,
     pub comfort: Option<f32>,
+    pub cost: Option<f32>,
+    pub fuel_economy: Option<f32>,
 }
 
 impl Stats {
@@ -29,6 +31,7 @@ impl Stats {
         result_map.insert(String::from("safety"), true);
         result_map.insert(String::from("practicality"), true);
         result_map.insert(String::from("comfort"), true);
+        result_map.insert(String::from("cost"), true);
 
         if let Some(drivability) = self.drivability {
             if car.drivability_rating < drivability { result_map.insert(String::from("drivability"), false); }
@@ -47,6 +50,12 @@ impl Stats {
         }
         if let Some(comfort) = self.comfort {
             if car.comfort_rating < comfort { result_map.insert(String::from("comfort"), false); }
+        }
+        if let Some(cost) = self.cost {
+            if car.cost > cost { result_map.insert(String::from("cost"), false); }
+        }
+        if let Some(fuel_economy) = self.fuel_economy {
+            if car.fuel_economy > fuel_economy { result_map.insert(String::from("fuel_economy"), false); }
         }
 
         let result_map = match rules {

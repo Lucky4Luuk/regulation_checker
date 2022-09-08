@@ -5,11 +5,20 @@ reliability = 65.0
 safety = 36.0
 practicality = 40.0
 comfort = 20.0
+cost = 35000
+fuel_economy = 7.8	# Liters / 100 km
 
 [rules]
 or = [["drivability", "sportiness"], ["practicality", "comfort"]]
 
 [engine]
 max_year = 2003
-#max_cylinders = 4 # This works too but I'm showcasing the ASS regulations lol
+#max_cylinders = 4	# This works too but I'm showcasing the ASS regulations lol
 turbo_max_cylinders = 4
+octane = 91	# In RON
+
+[wheels]
+must_match = true
+front_max_width = 205
+front_max_profile = 50
+front_max_rim = 16

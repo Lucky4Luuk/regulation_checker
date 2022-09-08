@@ -25,11 +25,22 @@ pub struct Car {
     pub safety_rating: f32,
     pub practicality_rating: f32,
     pub comfort_rating: f32,
+    pub cost: f32,
+    pub fuel_economy: f32,
 
 // Engine
     pub engine_year: usize,
     pub cylinder_count: usize,
     pub aspiration: String,
+    pub octane: f32,
+
+// Wheels
+    pub wheels_front_width: usize,
+    pub wheels_front_profile: usize,
+    pub wheels_front_rim: usize,
+    pub wheels_rear_width: usize,
+    pub wheels_rear_profile: usize,
+    pub wheels_rear_rim: usize,
 
 // Part information
     pub chassis_type: String,
@@ -62,10 +73,20 @@ impl Car {
             safety_rating: parse_float(&raw.safety_rating)?,
             practicality_rating: parse_float(&raw.practicality_rating)?,
             comfort_rating: parse_float(&raw.comfort_rating)?,
+            cost: parse_float(&raw.trim_cost)?,
+            fuel_economy: parse_float(&raw.trim_economy)?,
 
             engine_year: parse_int(&raw.variant_year)?,
             cylinder_count: parse_int(&raw.cylinder_count)?,
             aspiration: raw.aspiration,
+            octane: parse_float(&raw.fuel_octane)?,
+
+            wheels_front_width: parse_int(&raw.front_tyre_width)?,
+            wheels_front_profile: parse_int(&raw.front_tyre_profile)?,
+            wheels_front_rim: parse_int(&raw.front_rim_size)?,
+            wheels_rear_width: parse_int(&raw.rear_tyre_width)?,
+            wheels_rear_profile: parse_int(&raw.rear_tyre_profile)?,
+            wheels_rear_rim: parse_int(&raw.rear_rim_size)?,
 
             chassis_type: raw.chassis_type,
             chassis_material: raw.chassis_material,
@@ -85,6 +106,10 @@ impl Car {
 
     pub fn has_turbo(&self) -> bool {
         &self.aspiration.trim() != &"Naturally Aspirated"
+    }
+
+    pub fn wheels_match(&self) -> bool {
+        self.wheels_front_width == self.wheels_rear_width && self.wheels_front_profile == self.wheels_rear_profile && self.wheels_front_rim == self.wheels_rear_rim
     }
 }
 

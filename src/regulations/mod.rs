@@ -6,14 +6,17 @@ use crate::specs::Car;
 
 mod stats;
 mod engine;
+mod wheels;
 
 use stats::*;
 use engine::*;
+use wheels::*;
 
 #[derive(Debug, Clone)]
 pub enum CheckError {
     ErrStats(Vec<String>),
     ErrEngine(String),
+    ErrWheels(String),
 }
 
 impl std::fmt::Display for CheckError {
@@ -29,6 +32,7 @@ pub struct Regulations {
     pub stats: Option<Stats>,
     pub rules: Option<Rules>,
     pub engine: Option<Engine>,
+    pub wheels: Option<Wheels>,
 }
 
 impl Regulations {
@@ -42,6 +46,9 @@ impl Regulations {
         }
         if let Some(engine) = &self.engine {
             engine.check_car(car)?;
+        }
+        if let Some(wheels) = &self.wheels {
+            wheels.check_car(car)?;
         }
         Ok(())
     }
