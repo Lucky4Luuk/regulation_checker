@@ -9,7 +9,10 @@ cost = 35000
 fuel_economy = 7.8			# Liters / 100 km
 
 [rules]
-or = [["drivability", "sportiness"], ["practicality", "comfort"]]
+or = [
+	["drivability", "sportiness"],
+	["practicality", "comfort"]
+]
 
 [engine]
 max_year = 2003
@@ -25,4 +28,8 @@ front_max_rim = 16
 banned_compounds = ["Semi-Slick"]
 
 [other]
-banned_parts = []
+required_parts = [
+	"test",					# Require part called "test"
+	["opt1", "opt2"]		# Require either "opt1" or "opt2"
+]
+banned_parts = []			# Does not support `or` like required_parts, same otherwise
