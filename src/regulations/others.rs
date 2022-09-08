@@ -36,7 +36,7 @@ impl Others {
         let mut errs = Vec::new();
         if let Some(banned_parts) = &self.banned_parts {
             if banned_parts.len() > 0 {
-                for (k, v) in &car.raw {
+                for (_, v) in &car.raw {
                     for p in banned_parts {
                         if p.clone().trim() == v {
                             errs.push(format!("banned part {}", v));
@@ -47,7 +47,7 @@ impl Others {
         }
         if let Some(required_parts) = &self.required_parts {
             let mut req_parts_clone = required_parts.clone();
-            for (k, v) in &car.raw {
+            for (_, v) in &car.raw {
                 for i in 0..req_parts_clone.len() {
                     if req_parts_clone[i].validate(v.clone()) {
                         req_parts_clone.remove(i);

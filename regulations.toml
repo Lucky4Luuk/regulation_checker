@@ -28,8 +28,8 @@ front_max_rim = 16
 banned_compounds = ["Semi-Slick"]
 
 [other]
-required_parts = [
-	"test",					# Require part called "test"
-	["opt1", "opt2"]		# Require either "opt1" or "opt2"
-]
+# required_parts = [
+# 	"test",					# Require part called "test"
+# 	["opt1", "opt2"]		# Require either "opt1" or "opt2"
+# ]
 banned_parts = []			# Does not support `or` like required_parts, same otherwise

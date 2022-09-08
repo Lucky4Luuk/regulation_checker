@@ -1,7 +1,7 @@
 ========================================
  Results
 ========================================
-Dysoon Vack S...           Err(Regulations([ErrOthers(["parts missing [Part(\"test\"), Choice([\"opt1\", \"opt2\"])]"])]))
-Dysoon Zuck...             Err(Regulations([ErrStats(["safety", "reliability", "fuel_economy", "practicality|comfort"]), ErrEngine("fuel octane 95"), ErrWheels(["front tire width 225"]), ErrOthers(["parts missing [Part(\"test\"), Choice([\"opt1\", \"opt2\"])]"])]))
-RaccWorkz Flora 2.9 GTZ... Err(Regulations([ErrOthers(["parts missing [Part(\"test\"), Choice([\"opt1\", \"opt2\"])]"])]))
-vack s banned test...      Err(Regulations([ErrStats(["fuel_economy"]), ErrWheels(["banned compound Semi-Slick"]), ErrOthers(["parts missing [Part(\"test\"), Choice([\"opt1\", \"opt2\"])]"])]))
+Dysoon Vack S...           Ok(())
+Dysoon Zuck...             Err(Regulations([ErrStats(["reliability", "practicality|comfort", "safety", "fuel_economy"]), ErrEngine("fuel octane 95"), ErrWheels(["front tire width 225"])]))
+RaccWorkz Flora 2.9 GTZ... Ok(())
+vack s banned test...      Err(Regulations([ErrStats(["fuel_economy"]), ErrWheels(["banned compound Semi-Slick"])]))
