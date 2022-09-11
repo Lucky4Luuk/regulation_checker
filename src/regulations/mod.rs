@@ -18,7 +18,7 @@ use others::*;
 pub enum CheckError {
     Regulations(Vec<anyhow::Error>),
     ErrStats(Vec<String>),
-    ErrEngine(String),
+    ErrEngine(Vec<String>),
     ErrWheels(Vec<String>),
     ErrOthers(Vec<String>),
 }

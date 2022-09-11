@@ -38,6 +38,11 @@ pub struct Car {
     pub cylinder_count: usize,
     pub aspiration: String,
     pub octane: f32,
+    pub displacement: usize,
+    pub stroke: f32,
+    pub bore: f32,
+    pub intake_valves: usize,
+    pub exhaust_valves: usize,
 
 // Wheels
     pub wheels_front_width: usize,
@@ -92,6 +97,11 @@ impl Car {
             cylinder_count: parse_int(&raw.cylinder_count)?,
             aspiration: raw.aspiration,
             octane: parse_float(&raw.fuel_octane)?,
+            displacement: (parse_float(&raw.family_displacement)? * 1000.0) as usize,
+            stroke: parse_float(&raw.family_stroke)?,
+            bore: parse_float(&raw.family_bore)?,
+            intake_valves: parse_int(&raw.intake_valves)?,
+            exhaust_valves: parse_int(&raw.exhaust_valves)?,
 
         // Wheels
             wheels_front_width: parse_int(&raw.front_tyre_width)?,

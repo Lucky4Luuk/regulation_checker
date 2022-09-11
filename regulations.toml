@@ -19,6 +19,7 @@ max_year = 2003
 #max_cylinders = 4			# This works too but I'm showcasing the ASS regulations lol
 turbo_max_cylinders = 4
 octane = 91					# In RON
+max_total_valves = 4
 
 [wheels]
 must_match = true
