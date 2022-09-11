@@ -37,6 +37,15 @@ fn main() {
         }
     }
 
+    println!("Dumping all cars to car_dump.txt...");
+    let mut dump = String::new();
+    for car in &cars {
+        dump.push_str(&format!("{:#?}", car));
+        dump.push('\n');
+        dump.push('\n');
+    }
+    std::fs::write("car_dump.txt", dump).expect("Failed to write car dump!");
+
     let mut max_width = 0;
     let mut results = Vec::new();
     for car in &cars {

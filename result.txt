@@ -2,6 +2,6 @@
  Results
 ========================================
 Dysoon Vack S...           Err(Regulations([ErrEngine(["total valves 5"])]))
-Dysoon Zuck...             Err(Regulations([ErrStats(["safety", "fuel_economy", "reliability", "practicality|comfort"]), ErrEngine(["fuel octane 95", "total valves 5"]), ErrWheels(["front tire width 225"])]))
+Dysoon Zuck...             Err(Regulations([ErrStats(["safety", "fuel_economy", "practicality|comfort", "reliability"]), ErrEngine(["fuel octane 95", "total valves 5"]), ErrWheels(["front tire width 225"])]))
 RaccWorkz Flora 2.9 GTZ... Ok(())
 vack s banned test...      Err(Regulations([ErrStats(["fuel_economy"]), ErrEngine(["total valves 5"]), ErrWheels(["banned compound Semi-Slick"])]))
