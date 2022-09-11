@@ -12,6 +12,9 @@ pub struct Rules {
 
 #[derive(Debug, Deserialize)]
 pub struct Stats {
+    pub model_min_year: Option<usize>,
+    pub model_max_year: Option<usize>,
+
     pub drivability: Option<f32>,
     pub sportiness: Option<f32>,
     pub reliability: Option<f32>,
@@ -26,6 +29,9 @@ pub struct Stats {
 impl Stats {
     pub fn check_car(&self, car: &Car, rules: &Option<Rules>) -> Result<()> {
         let mut result_map: HashMap<String, bool> = HashMap::new();
+        result_map.insert(String::from("model_min_year"), true);
+        result_map.insert(String::from("model_max_year"), true);
+
         result_map.insert(String::from("drivability"), true);
         result_map.insert(String::from("sportiness"), true);
         result_map.insert(String::from("reliability"), true);
@@ -34,6 +40,14 @@ impl Stats {
         result_map.insert(String::from("comfort"), true);
         result_map.insert(String::from("prestige"), true);
         result_map.insert(String::from("cost"), true);
+        result_map.insert(String::from("fuel_economy"), true);
+
+        if let Some(model_min_year) = self.model_min_year {
+            if car.model_year < model_min_year { result_map.insert(String::from("model_min_year"), false); }
+        }
+        if let Some(model_max_year) = self.model_max_year {
+            if car.model_year > model_max_year { result_map.insert(String::from("model_max_year"), false); }
+        }
 
         if let Some(drivability) = self.drivability {
             if car.drivability_rating < drivability { result_map.insert(String::from("drivability"), false); }
