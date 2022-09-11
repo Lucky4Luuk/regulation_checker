@@ -29,6 +29,7 @@ pub struct Car {
     pub safety_rating: f32,
     pub practicality_rating: f32,
     pub comfort_rating: f32,
+    pub prestige_rating: f32,
     pub cost: f32,
     pub fuel_economy: f32,
 
@@ -82,6 +83,7 @@ impl Car {
             safety_rating: parse_float(&raw.safety_rating)?,
             practicality_rating: parse_float(&raw.practicality_rating)?,
             comfort_rating: parse_float(&raw.comfort_rating)?,
+            prestige_rating: parse_float(&raw.prestige_rating)?,
             cost: parse_float(&raw.trim_cost)?,
             fuel_economy: parse_float(&raw.trim_economy)?,
 

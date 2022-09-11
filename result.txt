@@ -2,6 +2,6 @@
  Results
 ========================================
 Dysoon Vack S...           Ok(())
-Dysoon Zuck...             Err(Regulations([ErrStats(["reliability", "practicality|comfort", "safety", "fuel_economy"]), ErrEngine("fuel octane 95"), ErrWheels(["front tire width 225"])]))
+Dysoon Zuck...             Err(Regulations([ErrStats(["fuel_economy", "reliability", "safety", "practicality|comfort"]), ErrEngine("fuel octane 95"), ErrWheels(["front tire width 225"])]))
 RaccWorkz Flora 2.9 GTZ... Ok(())
 vack s banned test...      Err(Regulations([ErrStats(["fuel_economy"]), ErrWheels(["banned compound Semi-Slick"])]))
