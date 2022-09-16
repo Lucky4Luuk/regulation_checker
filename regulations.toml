@@ -36,5 +36,9 @@ banned_types = ["4x4"]
 required_parts = [
 	["Baffled", "Reverse Flow"]
 ]
+banned_parts = [
+	"Variable Hydraulic",
+	"Electric Variable"
+]
 min_quality = -5
 max_quality = 3
