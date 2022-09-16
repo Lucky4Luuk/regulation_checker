@@ -11,12 +11,15 @@ pub struct Wheels {
     pub front_max_width: Option<usize>,
     pub front_max_profile: Option<usize>,
     pub front_max_rim: Option<usize>,
+    pub front_wheel_diameter: Option<usize>,
 
     pub rear_max_width: Option<usize>,
     pub rear_max_profile: Option<usize>,
     pub rear_max_rim: Option<usize>,
+    pub rear_wheel_diameter: Option<usize>,
 
     pub banned_compounds: Option<Vec<String>>,
+    pub banned_rim_materials: Option<Vec<String>>,
 }
 
 impl Wheels {
@@ -25,6 +28,7 @@ impl Wheels {
         if self.must_match.unwrap_or(false) {
             if !car.wheels_match() { errs.push(String::from("wheels dont match")); }
         }
+
         if let Some(front_max_width) = self.front_max_width {
             if car.wheels_front_width > front_max_width {
                 errs.push(format!("front tire width {}", car.wheels_front_width));
@@ -38,6 +42,11 @@ impl Wheels {
         if let Some(front_max_rim) = self.front_max_rim {
             if car.wheels_front_rim > front_max_rim {
                 errs.push(format!("front tire rim {}", car.wheels_front_rim));
+            }
+        }
+        if let Some(front_wheel_diameter) = self.front_wheel_diameter {
+            if car.wheels_front_diameter > front_wheel_diameter {
+                errs.push(format!("front tire diameter {}", car.wheels_front_diameter));
             }
         }
 
@@ -56,10 +65,23 @@ impl Wheels {
                 errs.push(format!("rear tire rim {}", car.wheels_rear_rim));
             }
         }
+        if let Some(rear_wheel_diameter) = self.rear_wheel_diameter {
+            if car.wheels_rear_diameter > rear_wheel_diameter {
+                errs.push(format!("rear tire diameter {}", car.wheels_rear_diameter));
+            }
+        }
+
         if let Some(banned_compounds) = &self.banned_compounds {
             for compound in banned_compounds {
                 if compound.clone().trim() == car.wheels_compound.trim() {
                     errs.push(format!("banned compound {}", car.wheels_compound));
+                }
+            }
+        }
+        if let Some(banned_rim_materials) = &self.banned_rim_materials {
+            for mat in banned_rim_materials {
+                if car.wheels_rim_material.trim() == mat.trim() {
+                    errs.push(format!("banned rim material {}", car.wheels_rim_material));
                 }
             }
         }

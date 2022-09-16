@@ -7,11 +7,15 @@ use crate::specs::Car;
 mod stats;
 mod engine;
 mod wheels;
+mod chassis;
+mod drivetrain;
 mod others;
 
 use stats::*;
 use engine::*;
 use wheels::*;
+use chassis::*;
+use drivetrain::*;
 use others::*;
 
 #[derive(Debug)]
@@ -20,6 +24,8 @@ pub enum CheckError {
     ErrStats(Vec<String>),
     ErrEngine(Vec<String>),
     ErrWheels(Vec<String>),
+    ErrChassis(Vec<String>),
+    ErrDrivetrain(Vec<String>),
     ErrOthers(Vec<String>),
 }
 
@@ -37,6 +43,8 @@ pub struct Regulations {
     pub rules: Option<Rules>,
     pub engine: Option<Engine>,
     pub wheels: Option<Wheels>,
+    pub chassis: Option<Chassis>,
+    pub drivetrain: Option<Drivetrain>,
     pub other: Option<Others>,
 }
 
@@ -59,6 +67,16 @@ impl Regulations {
         }
         if let Some(wheels) = &self.wheels {
             if let Err(e) = wheels.check_car(car) {
+                errs.push(e);
+            }
+        }
+        if let Some(chassis) = &self.chassis {
+            if let Err(e) = chassis.check_car(car) {
+                errs.push(e);
+            }
+        }
+        if let Some(drivetrain) = &self.drivetrain {
+            if let Err(e) = drivetrain.check_car(car) {
                 errs.push(e);
             }
         }

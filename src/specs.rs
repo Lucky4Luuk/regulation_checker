@@ -38,20 +38,30 @@ pub struct Car {
     pub cylinder_count: usize,
     pub aspiration: String,
     pub octane: f32,
+    pub fuel_type: String,
     pub displacement: usize,
     pub stroke: f32,
     pub bore: f32,
+    pub intake_type: String,
     pub intake_valves: usize,
     pub exhaust_valves: usize,
+    pub catalytic_converter: String,
+    pub headers: String,
 
 // Wheels
     pub wheels_front_width: usize,
     pub wheels_front_profile: usize,
     pub wheels_front_rim: usize,
+    pub wheels_front_diameter: usize,
     pub wheels_rear_width: usize,
     pub wheels_rear_profile: usize,
     pub wheels_rear_rim: usize,
+    pub wheels_rear_diameter: usize,
     pub wheels_compound: String,
+    pub wheels_rim_material: String,
+
+// Drivetrain
+    pub drivetrain_type: String,
 
 // Part information
     pub chassis_type: String,
@@ -97,20 +107,30 @@ impl Car {
             cylinder_count: parse_int(&raw.cylinder_count)?,
             aspiration: raw.aspiration,
             octane: parse_float(&raw.fuel_octane)?,
+            fuel_type: if raw.leaded_fuel.to_lowercase().contains("false") { String::from("leaded") } else { String::from("unleaded") },
             displacement: (parse_float(&raw.family_displacement)? * 1000.0) as usize,
             stroke: parse_float(&raw.family_stroke)?,
             bore: parse_float(&raw.family_bore)?,
+            intake_type: raw.intake,
             intake_valves: parse_int(&raw.intake_valves)?,
             exhaust_valves: parse_int(&raw.exhaust_valves)?,
+            catalytic_converter: raw.catalytic_converter,
+            headers: raw.headers,
 
         // Wheels
             wheels_front_width: parse_int(&raw.front_tyre_width)?,
             wheels_front_profile: parse_int(&raw.front_tyre_profile)?,
             wheels_front_rim: parse_int(&raw.front_rim_size)?,
+            wheels_front_diameter: parse_int(&raw.front_wheel_diameter)?,
             wheels_rear_width: parse_int(&raw.rear_tyre_width)?,
             wheels_rear_profile: parse_int(&raw.rear_tyre_profile)?,
             wheels_rear_rim: parse_int(&raw.rear_rim_size)?,
+            wheels_rear_diameter: parse_int(&raw.rear_wheel_diameter)?,
             wheels_compound: raw.tyre_compound,
+            wheels_rim_material: raw.rim_material,
+
+        // Drivetrain
+            drivetrain_type: raw.drive_type,
 
         // Part information
             chassis_type: raw.chassis_type,

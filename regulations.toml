@@ -1,36 +1,40 @@
 [stats]
-drivability = 35.0
-sportiness = 35.0
-reliability = 65.0
-safety = 36.0
-practicality = 40.0
-comfort = 20.0
-cost = 35000
+drivability = 27.0
+safety = 27.0
+comfort = 15.0
+cost = 55000
 fuel_economy = 7.8			# Liters / 100 km
 
-[rules]
-or = [
-	["drivability", "sportiness"],
-	["practicality", "comfort"]
-]
+[chassis]
+banned_materials = ["Carbon Fibre"]
 
 [engine]
-max_year = 2003
-#max_cylinders = 4			# This works too but I'm showcasing the ASS regulations lol
-turbo_max_cylinders = 4
-octane = 91					# In RON
+min_year = 2018
+max_year = 2018
+max_cylinders = 6
+max_displacement = 1600
+octane = 98
+fuel_type = ["Unleaded"]
 max_total_valves = 4
+catalytic_converter_banned = ["High Flow"]
+intake_banned = ["Race", "Variable"]
+headers_banned = ["Turbo Race"]
 
 [wheels]
-must_match = true
-front_max_width = 205
-front_max_profile = 50
-front_max_rim = 16
-banned_compounds = ["Semi-Slick"]
+front_min_width = 125
+front_max_width = 200
+front_wheel_diameter = 650
+rear_min_width = 125
+rear_max_width = 200
+rear_wheel_diameter = 650
+banned_rim_materials = ["Carbon Fibre"]
+
+[drivetrain]
+banned_types = ["4x4"]
 
 [other]
-# required_parts = [
-# 	"test",					# Require part called "test"
-# 	["opt1", "opt2"]		# Require either "opt1" or "opt2"
-# ]
-banned_parts = []			# Does not support `or` like required_parts, same otherwise
+required_parts = [
+	["Baffled", "Reverse Flow"]
+]
+min_quality = -5
+max_quality = 3
