@@ -19,6 +19,8 @@ pub struct Engine {
     pub max_intake_valves: Option<usize>,
     pub max_exhaust_valves: Option<usize>,
     pub max_total_valves: Option<usize>,
+    pub max_compression: Option<f32>,
+    pub max_rpm: Option<usize>,
 
     pub catalytic_converter_banned: Option<Vec<String>>,
     pub intake_banned: Option<Vec<String>>,
@@ -90,6 +92,16 @@ impl Engine {
             let total_valves = car.intake_valves + car.exhaust_valves;
             if total_valves > max_total_valves {
                 errs.push(format!("total valves {}", total_valves));
+            }
+        }
+        if let Some(max_compression) = self.max_compression {
+            if car.compression > max_compression {
+                errs.push(format!("compression {}", car.compression));
+            }
+        }
+        if let Some(max_rpm) = self.max_rpm {
+            if car.rpm > max_rpm {
+                errs.push(format!("max rpm {}", car.rpm));
             }
         }
 

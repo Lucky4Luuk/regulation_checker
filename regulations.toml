@@ -1,9 +1,13 @@
+# WRC!!!
 [stats]
-drivability = 27.0
-safety = 27.0
-comfort = 15.0
-cost = 55000
-fuel_economy = 7.8			# Liters / 100 km
+sportiness = 40.0
+offroad = 30.0
+safety = 45.0
+cost = 150000
+fuel_economy = 11.5
+
+[rules]
+or = [["offroad", "sportiness"]]
 
 [chassis]
 banned_materials = ["Carbon Fibre"]
@@ -15,18 +19,19 @@ max_cylinders = 6
 max_displacement = 1600
 octane = 98
 fuel_type = ["Unleaded"]
-max_total_valves = 4
 catalytic_converter_banned = ["High Flow"]
 intake_banned = ["Race", "Variable"]
 headers_banned = ["Turbo Race"]
 
 [wheels]
 front_min_width = 125
-front_max_width = 200
+front_max_width = 205
 front_wheel_diameter = 650
+front_max_rim = 18
 rear_min_width = 125
-rear_max_width = 200
+rear_max_width = 205
 rear_wheel_diameter = 650
+rear_max_rim = 18
 banned_rim_materials = ["Carbon Fibre"]
 
 [drivetrain]
@@ -34,11 +39,16 @@ banned_types = ["4x4"]
 
 [other]
 required_parts = [
-	["Baffled", "Reverse Flow"]
+    ["Baffled", "Reverse Flow"],
+    "Radial",
+    "All-Terrain",
+    ["Manual", "Automanual"]
 ]
 banned_parts = [
-	"Variable Hydraulic",
-	"Electric Variable"
+    "Variable Hydraulic",
+    "Electric Variable",
+    "Viscious LSD",
+    "Electric LSD"
 ]
 min_quality = -5
-max_quality = 3
+max_quality = 5

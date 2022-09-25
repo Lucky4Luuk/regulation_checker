@@ -1,8 +1,4 @@
 ========================================
  Results
 ========================================
-Dysoon Succhiare...        Ok(())
-Dysoon Vack S...           Err(Regulations([ErrStats(["comfort"]), ErrEngine(["engine year 2003", "total valves 5"]), ErrWheels(["front tire width 205", "rear tire width 205"]), ErrOthers(["illegal quality trim_tyre_quality"])]))
-Dysoon Zuck...             Err(Regulations([ErrStats(["comfort", "fuel_economy", "safety"]), ErrEngine(["engine year 1995", "displacement 2045", "total valves 5"]), ErrWheels(["front tire width 225", "rear tire width 225"]), ErrOthers(["illegal quality variant_aspiration_quality"])]))
-RaccWorkz Flora 2.9 GTZ... Err(Regulations([ErrStats(["comfort"]), ErrEngine(["engine year 2003", "displacement 2899"]), ErrWheels(["front tire width 205", "rear tire width 205"])]))
-vack s banned test...      Err(Regulations([ErrStats(["comfort", "fuel_economy"]), ErrEngine(["engine year 2003", "total valves 5"]), ErrWheels(["front tire width 205", "rear tire width 205"]), ErrOthers(["illegal quality trim_tyre_quality"])]))
+Dysoon Succhiare WRC... Ok(())

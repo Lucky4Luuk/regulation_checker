@@ -4,7 +4,7 @@ use anyhow::Result;
 use serde::{Serialize, Deserialize};
 
 fn parse_float(s: &str) -> Result<f32> {
-    Ok(s.trim().parse::<f32>()?)
+    Ok((s.trim().parse::<f32>()? * 10.0).round() / 10.0)
 }
 
 fn parse_int(s: &str) -> Result<usize> {
@@ -30,7 +30,9 @@ pub struct Car {
     pub practicality_rating: f32,
     pub comfort_rating: f32,
     pub prestige_rating: f32,
+    pub offroad_rating: f32,
     pub cost: f32,
+    pub service_cost: f32,
     pub fuel_economy: f32,
 
 // Engine
@@ -45,6 +47,8 @@ pub struct Car {
     pub intake_type: String,
     pub intake_valves: usize,
     pub exhaust_valves: usize,
+    pub compression: f32,
+    pub rpm: usize,
     pub catalytic_converter: String,
     pub headers: String,
 
@@ -99,7 +103,9 @@ impl Car {
             practicality_rating: parse_float(&raw.practicality_rating)?,
             comfort_rating: parse_float(&raw.comfort_rating)?,
             prestige_rating: parse_float(&raw.prestige_rating)?,
+            offroad_rating: parse_float(&raw.offroad_rating)?,
             cost: parse_float(&raw.trim_cost)?,
+            service_cost: parse_float(&raw.trim_service_costs)?,
             fuel_economy: parse_float(&raw.trim_economy)?,
 
         // Engine
@@ -114,6 +120,8 @@ impl Car {
             intake_type: raw.intake,
             intake_valves: parse_int(&raw.intake_valves)?,
             exhaust_valves: parse_int(&raw.exhaust_valves)?,
+            compression: parse_float(&raw.compression)?,
+            rpm: parse_int(&raw.max_rpm)?,
             catalytic_converter: raw.catalytic_converter,
             headers: raw.headers,
 

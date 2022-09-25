@@ -4,7 +4,6 @@ mod regulations;
 fn main() {
     println!("Loading regulations...");
     let regulations = regulations::Regulations::load().expect("Failed to load regulations!");
-    // println!("{:?}", regulations);
 
     println!("Scanning ./cars...");
     let mut dirs = Vec::new();
